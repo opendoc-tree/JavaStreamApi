@@ -68,26 +68,26 @@ public class StreamExample {
 
         System.out.println();
 
-        System.out.println("================== Count total product ===================");
+        System.out.println("================== Find out total stock of products ================");
         long totalProduct = products.stream().count();
         System.out.println(totalProduct);
 
         System.out.println();
 
-        System.out.println("================== Sum of all product payable price ===================");
+        System.out.println("====== Calculate total stock amount based on products payable price  =======");
         double totalPrice = products.stream().mapToDouble(e->e.getPrice()-e.getOffer()).sum();
         System.out.println(totalPrice);
 
         System.out.println();
 
-        System.out.println("================== Group by category ===================");
+        System.out.println("================== Show products based on category ===================");
         Map<String, List<Product>> groupByCategory = products.stream()
                 .collect(Collectors.groupingBy(Product::getCategory));
         System.out.println(groupByCategory);
 
         System.out.println();
 
-        System.out.println("============= Group by category with group total price ================");
+        System.out.println("=== Showing total stock amount of each category based on his products payable price ===");
         List<GroupAmount> groupAmountList = new ArrayList<>();
         products.stream().collect(Collectors.groupingBy(Product::getCategory))
                 .forEach((k,v)->{
