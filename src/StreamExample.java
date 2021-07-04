@@ -1,7 +1,4 @@
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class StreamExample {
@@ -84,8 +81,19 @@ public class StreamExample {
         System.out.println();
 
         System.out.println("================== Group by category ===================");
-        Map<String, List<Product>> groupByCategory =products.stream()
+        Map<String, List<Product>> groupByCategory = products.stream()
                 .collect(Collectors.groupingBy(Product::getCategory));
         System.out.println(groupByCategory);
+
+        System.out.println();
+
+        System.out.println("============= Group by category with group total price ================");
+        List<GroupAmount> groupAmountList = new ArrayList<>();
+        products.stream().collect(Collectors.groupingBy(Product::getCategory))
+                .forEach((k,v)->{
+                    double groupPrice = v.stream().mapToDouble(e->e.getPrice()-e.getOffer()).sum();
+                    groupAmountList.add(new GroupAmount(k,groupPrice,v));
+                });
+        System.out.println(groupAmountList);
     }
 }
